@@ -1,0 +1,43 @@
+---
+description: PEP 8 style, DRY structure, and sensible Python/Django performance for this repo
+globs: "**/*.py"
+alwaysApply: false
+---
+
+# Python style and quality
+
+## PEP 8
+
+- Follow [PEP 8](https://peps.python.org/pep-0008/) for names, imports, spacing, and line breaks.
+- Prefer **one import style** per file: stdlib → third-party → local, grouped with a blank line between groups.
+- Keep lines readable; wrap long signatures and calls consistently with surrounding code.
+- If the project adds **Ruff, Black, or flake8**, defer to their config over ad-hoc formatting.
+
+## DRY (do not repeat yourself)
+
+- Extract shared logic into **small functions or modules** instead of duplicating blocks.
+- Reuse **constants** and enums for repeated literals (status strings, magic numbers with meaning).
+- In Django, prefer **model methods**, **queryset helpers**, or **services** over copying the same ORM or validation logic in views, commands, and serializers.
+
+## Optimization (practical, not clever)
+
+- Prefer **clear code** first; optimize when there is a measured or obvious hotspot (N+1 queries, large loops, heavy I/O).
+- In Django views and APIs, use **`select_related` / `prefetch_related`** where ForeignKey and reverse relations are accessed in a loop or serializer.
+- Avoid redundant **database hits** and repeated **expensive work** inside tight loops; cache at request scope or compute once when it stays correct.
+
+## Examples
+
+```python
+# ❌ Repeated query per row
+for order in Order.objects.all():
+    _ = order.checkout.email  # N+1 on checkout
+
+# ✅ Fetch in one round-trip when you need checkout
+for order in Order.objects.select_related("checkout"):
+    _ = order.checkout.email
+```
+
+```python
+# ❌ Copy-pasted validation in two call sites
+# ✅ Single validated function or serializer method used from both places
+```

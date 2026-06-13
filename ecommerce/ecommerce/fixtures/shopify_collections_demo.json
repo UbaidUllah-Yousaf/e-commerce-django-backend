@@ -1,0 +1,383 @@
+{
+  "collections": [
+    {
+      "id": 1001,
+      "title": "Men's Fashion",
+      "handle": "mens-fashion",
+      "description": "Premium men's clothing collection.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f"
+      },
+      "products": [
+        {
+          "id": 2001,
+          "title": "Classic Cotton T-Shirt",
+          "handle": "classic-cotton-tshirt",
+          "vendor": "Urban Wear",
+          "product_type": "T-Shirts",
+          "description": "Premium cotton t-shirt.",
+          "tags": ["cotton", "summer", "casual"],
+          "options": [
+            {
+              "id": 3001,
+              "name": "Size",
+              "values": ["S", "M", "L", "XL"]
+            },
+            {
+              "id": 3002,
+              "name": "Color",
+              "values": ["Black", "White", "Blue"]
+            }
+          ],
+          "images": [
+            {
+              "id": 4001,
+              "src": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab"
+            },
+            {
+              "id": 4002,
+              "src": "https://images.unsplash.com/photo-1503341504253-dff4815485f1"
+            }
+          ],
+          "variants": [
+            {
+              "id": 5001,
+              "title": "S / Black",
+              "sku": "TS-S-BLK",
+              "price": "29.99",
+              "inventory_quantity": 50,
+              "option1": "S",
+              "option2": "Black",
+              "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab"
+            },
+            {
+              "id": 5002,
+              "title": "M / White",
+              "sku": "TS-M-WHT",
+              "price": "29.99",
+              "inventory_quantity": 40,
+              "option1": "M",
+              "option2": "White",
+              "image": "https://images.unsplash.com/photo-1503341504253-dff4815485f1"
+            }
+          ]
+        },
+        {
+          "id": 2002,
+          "title": "Slim Fit Jeans",
+          "handle": "slim-fit-jeans",
+          "vendor": "Denim Club",
+          "product_type": "Jeans",
+          "description": "Comfort stretch slim fit jeans.",
+          "tags": ["jeans", "denim"],
+          "options": [
+            {
+              "id": 3003,
+              "name": "Waist",
+              "values": ["30", "32", "34", "36"]
+            },
+            {
+              "id": 3004,
+              "name": "Color",
+              "values": ["Blue", "Black"]
+            }
+          ],
+          "images": [
+            {
+              "id": 4003,
+              "src": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246"
+            }
+          ],
+          "variants": [
+            {
+              "id": 5003,
+              "title": "32 / Blue",
+              "sku": "JEAN-32-BLU",
+              "price": "69.99",
+              "inventory_quantity": 30,
+              "option1": "32",
+              "option2": "Blue",
+              "image": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246"
+            }
+          ]
+        },
+        {
+          "id": 2003,
+          "title": "Leather Jacket",
+          "handle": "leather-jacket",
+          "vendor": "Rider Style",
+          "product_type": "Jackets",
+          "description": "Genuine leather biker jacket.",
+          "tags": ["jacket", "leather", "winter"],
+          "options": [
+            {
+              "id": 3005,
+              "name": "Size",
+              "values": ["M", "L", "XL"]
+            }
+          ],
+          "images": [
+            {
+              "id": 4004,
+              "src": "https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504"
+            }
+          ],
+          "variants": [
+            {
+              "id": 5004,
+              "title": "L",
+              "sku": "JACKET-L",
+              "price": "149.99",
+              "inventory_quantity": 12,
+              "option1": "L",
+              "image": "https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1002,
+      "title": "Women's Fashion",
+      "handle": "womens-fashion",
+      "description": "Modern fashion for women.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1496747611176-843222e1e57c"
+      },
+      "products": [
+        {
+          "id": 2101,
+          "title": "Floral Summer Dress",
+          "handle": "floral-summer-dress",
+          "vendor": "Elegant Style",
+          "product_type": "Dresses",
+          "description": "Lightweight floral printed summer dress.",
+          "tags": ["dress", "summer", "fashion"],
+          "options": [
+            {
+              "id": 3101,
+              "name": "Size",
+              "values": ["S", "M", "L"]
+            }
+          ],
+          "images": [
+            {
+              "id": 4101,
+              "src": "https://images.unsplash.com/photo-1496747611176-843222e1e57c"
+            }
+          ],
+          "variants": [
+            {
+              "id": 5101,
+              "title": "M",
+              "sku": "DRESS-M",
+              "price": "89.99",
+              "inventory_quantity": 20,
+              "option1": "M",
+              "image": "https://images.unsplash.com/photo-1496747611176-843222e1e57c"
+            }
+          ]
+        },
+        {
+          "id": 2102,
+          "title": "Women's Handbag",
+          "handle": "womens-handbag",
+          "vendor": "Luxury Bags",
+          "product_type": "Bags",
+          "description": "Elegant leather handbag.",
+          "tags": ["bag", "leather", "luxury"],
+          "options": [
+            {
+              "id": 3102,
+              "name": "Color",
+              "values": ["Brown", "Black", "Pink"]
+            }
+          ],
+          "images": [
+            {
+              "id": 4102,
+              "src": "https://images.unsplash.com/photo-1542291026-7eec264c27ff"
+            }
+          ],
+          "variants": [
+            {
+              "id": 5102,
+              "title": "Brown",
+              "sku": "BAG-BROWN",
+              "price": "120.00",
+              "inventory_quantity": 15,
+              "option1": "Brown",
+              "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1003,
+      "title": "Electronics",
+      "handle": "electronics",
+      "description": "Latest electronic gadgets.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1519389950473-47ba0277781c"
+      },
+      "products": [
+        {
+          "id": 2201,
+          "title": "Wireless Headphones",
+          "handle": "wireless-headphones",
+          "vendor": "SoundMax",
+          "product_type": "Audio",
+          "description": "Noise cancelling wireless headphones.",
+          "tags": ["headphones", "audio", "wireless"],
+          "options": [
+            {
+              "id": 3201,
+              "name": "Color",
+              "values": ["Black", "Silver"]
+            }
+          ],
+          "images": [
+            {
+              "id": 4201,
+              "src": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e"
+            }
+          ],
+          "variants": [
+            {
+              "id": 5201,
+              "title": "Black",
+              "sku": "HEADPHONE-BLK",
+              "price": "199.99",
+              "inventory_quantity": 18,
+              "option1": "Black",
+              "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e"
+            }
+          ]
+        },
+        {
+          "id": 2202,
+          "title": "Gaming Laptop",
+          "handle": "gaming-laptop",
+          "vendor": "PowerTech",
+          "product_type": "Computers",
+          "description": "High performance gaming laptop.",
+          "tags": ["gaming", "laptop", "electronics"],
+          "options": [
+            {
+              "id": 3202,
+              "name": "RAM",
+              "values": ["16GB", "32GB"]
+            }
+          ],
+          "images": [
+            {
+              "id": 4202,
+              "src": "https://images.unsplash.com/photo-1517336714739-489689fd1ca8"
+            }
+          ],
+          "variants": [
+            {
+              "id": 5202,
+              "title": "16GB",
+              "sku": "LAPTOP-16GB",
+              "price": "1499.99",
+              "inventory_quantity": 10,
+              "option1": "16GB",
+              "image": "https://images.unsplash.com/photo-1517336714739-489689fd1ca8"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1004,
+      "title": "Home & Living",
+      "handle": "home-living",
+      "description": "Modern furniture and decor.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85"
+      },
+      "products": [
+        {
+          "id": 2301,
+          "title": "Wooden Coffee Table",
+          "handle": "wooden-coffee-table",
+          "vendor": "Nordic Home",
+          "product_type": "Furniture",
+          "description": "Minimalist wooden coffee table.",
+          "tags": ["table", "wood", "furniture"],
+          "options": [
+            {
+              "id": 3301,
+              "name": "Color",
+              "values": ["Walnut", "Oak"]
+            }
+          ],
+          "images": [
+            {
+              "id": 4301,
+              "src": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85"
+            }
+          ],
+          "variants": [
+            {
+              "id": 5301,
+              "title": "Walnut",
+              "sku": "TABLE-WALNUT",
+              "price": "249.99",
+              "inventory_quantity": 9,
+              "option1": "Walnut",
+              "image": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 1005,
+      "title": "Sports & Fitness",
+      "handle": "sports-fitness",
+      "description": "Fitness and sports gear.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438"
+      },
+      "products": [
+        {
+          "id": 2401,
+          "title": "Adjustable Dumbbells",
+          "handle": "adjustable-dumbbells",
+          "vendor": "FitPro",
+          "product_type": "Fitness",
+          "description": "Adjustable weight dumbbells set.",
+          "tags": ["fitness", "gym", "dumbbells"],
+          "options": [
+            {
+              "id": 3401,
+              "name": "Weight",
+              "values": ["10KG", "20KG", "30KG"]
+            }
+          ],
+          "images": [
+            {
+              "id": 4401,
+              "src": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438"
+            }
+          ],
+          "variants": [
+            {
+              "id": 5401,
+              "title": "20KG",
+              "sku": "DUMBBELL-20",
+              "price": "180.00",
+              "inventory_quantity": 14,
+              "option1": "20KG",
+              "image": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+

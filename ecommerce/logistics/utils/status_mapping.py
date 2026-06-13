@@ -1,0 +1,29 @@
+from logistics.constants import (
+    LOGISTICS_STATUS_DELIVERED,
+    LOGISTICS_STATUS_FAILED_DELIVERY,
+    LOGISTICS_STATUS_IN_TRANSIT,
+    LOGISTICS_STATUS_OUT_FOR_DELIVERY,
+    LOGISTICS_STATUS_PENDING,
+    LOGISTICS_STATUS_PICKED_UP,
+    LOGISTICS_STATUS_RETURNED,
+)
+
+QUIQUP_STATUS_MAP = {
+    "pending": LOGISTICS_STATUS_PENDING,
+    "created": LOGISTICS_STATUS_PENDING,
+    "picked": LOGISTICS_STATUS_PICKED_UP,
+    "picked_up": LOGISTICS_STATUS_PICKED_UP,
+    "at_depot": LOGISTICS_STATUS_IN_TRANSIT,
+    "in_transit": LOGISTICS_STATUS_IN_TRANSIT,
+    "out_for_delivery": LOGISTICS_STATUS_OUT_FOR_DELIVERY,
+    "delivered": LOGISTICS_STATUS_DELIVERED,
+    "failed": LOGISTICS_STATUS_FAILED_DELIVERY,
+    "failed_delivery": LOGISTICS_STATUS_FAILED_DELIVERY,
+    "returned": LOGISTICS_STATUS_RETURNED,
+    "cancelled": LOGISTICS_STATUS_RETURNED,
+}
+
+
+def map_quiqup_status(raw: str) -> str:
+    key = (raw or "").strip().lower().replace(" ", "_")
+    return QUIQUP_STATUS_MAP.get(key, LOGISTICS_STATUS_PENDING)

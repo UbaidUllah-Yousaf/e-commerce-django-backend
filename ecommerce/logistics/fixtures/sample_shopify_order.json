@@ -1,0 +1,27 @@
+{
+  "id": 5678901234,
+  "name": "#1001",
+  "email": "customer@example.com",
+  "phone": "+923001234567",
+  "financial_status": "pending",
+  "total_price": "2500.00",
+  "shipping_address": {
+    "first_name": "Ali",
+    "last_name": "Khan",
+    "address1": "123 Mall Road",
+    "city": "Lahore",
+    "province": "Punjab",
+    "country": "Pakistan",
+    "zip": "54000",
+    "phone": "+923001234567"
+  },
+  "line_items": [
+    {
+      "id": 1,
+      "title": "Classic Cotton T-Shirt",
+      "quantity": 2,
+      "sku": "TSHIRT-001",
+      "price": "1250.00"
+    }
+  ]
+}

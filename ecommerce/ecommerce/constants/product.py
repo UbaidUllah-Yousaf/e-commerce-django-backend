@@ -1,0 +1,19 @@
+"""Product lifecycle and channel choices (mirrors ``Product`` status / published_scope)."""
+
+PRODUCT_STATUS_DRAFT = "draft"
+PRODUCT_STATUS_ACTIVE = "active"
+PRODUCT_STATUS_ARCHIVED = "archived"
+PRODUCT_STATUS_CHOICES = (
+    (PRODUCT_STATUS_DRAFT, "Draft"),
+    (PRODUCT_STATUS_ACTIVE, "Active"),
+    (PRODUCT_STATUS_ARCHIVED, "Archived"),
+)
+
+PRODUCT_PUBLISHED_SCOPE_WEB = "web"
+PRODUCT_PUBLISHED_SCOPE_GLOBAL = "global"
+PRODUCT_PUBLISHED_SCOPE_NONE = "none"
+PRODUCT_PUBLISHED_SCOPE_CHOICES = (
+    (PRODUCT_PUBLISHED_SCOPE_WEB, "Online store"),
+    (PRODUCT_PUBLISHED_SCOPE_GLOBAL, "Global"),
+    (PRODUCT_PUBLISHED_SCOPE_NONE, "None"),
+)

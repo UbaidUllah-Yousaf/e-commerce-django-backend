@@ -1,0 +1,33 @@
+---
+description: Keep responses and tool use lean to minimize Cursor token usage
+alwaysApply: true
+---
+
+# Minimize token usage
+
+## Responses
+
+- Answer the question directly; skip preamble and recap unless the user asks.
+- Prefer short paragraphs and bullets over long prose.
+- Do not repeat the user's question or restate the full plan after completing work.
+- One code citation per point when possible; avoid duplicating the same snippet.
+- Skip "optional follow-ups" and engagement bait unless a real blocker exists.
+
+## Tool use
+
+- Read only files needed for the task; use targeted search/grep before opening large files.
+- Do not explore unrelated directories or run broad refactors unless requested.
+- Batch independent reads/searches in parallel.
+- Avoid re-reading files already in context unless they changed.
+- Do not add tests, docs, or comments the user did not ask for.
+
+## Code changes
+
+- Smallest diff that solves the problem; match existing style.
+- No drive-by formatting, renames, or "while we're here" edits.
+- Prefer extending existing helpers over new abstractions for one-off logic.
+
+## When unsure
+
+- Ask one focused question instead of a long options essay.
+- If the task is small, implement once; do not over-plan.

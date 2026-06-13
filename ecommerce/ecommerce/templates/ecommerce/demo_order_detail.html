@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Order detail (demo)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f4f2ef;
+      --surface: #fff;
+      --border: #e6e2dc;
+      --text: #1c1917;
+      --muted: #57534e;
+      --accent: #0f766e;
+      --paid: #166534;
+      --paid-bg: #dcfce7;
+      --ship: #1d4ed8;
+      --ship-bg: #dbeafe;
+      --line-unfulfilled: #78716c;
+      --line-unfulfilled-bg: #f5f5f4;
+      --line-partial: #b45309;
+      --line-partial-bg: #ffedd5;
+      --line-fulfilled: #166534;
+      --line-fulfilled-bg: #dcfce7;
+      --radius: 12px;
+      --shadow: 0 1px 2px rgba(28, 25, 23, 0.06), 0 8px 24px rgba(28, 25, 23, 0.06);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "DM Sans", system-ui, sans-serif;
+      font-size: 15px;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.5;
+    }
+    a { color: var(--accent); }
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 2rem 1.25rem 3rem; }
+    .crumbs {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+    .crumbs span { opacity: 0.45; padding: 0 0.35rem; }
+    header.page-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .page-head h1 {
+      font-family: Fraunces, Georgia, serif;
+      font-weight: 600;
+      font-size: clamp(1.75rem, 4vw, 2.25rem);
+      margin: 0 0 0.35rem;
+      letter-spacing: -0.02em;
+    }
+    .kicker {
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.25rem;
+    }
+    .meta { color: var(--muted); font-size: 0.9rem; }
+    .badges { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: flex-end; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .badge--paid { background: var(--paid-bg); color: var(--paid); }
+    .badge--pending { background: #fef3c7; color: #92400e; }
+    .badge--fulfilled { background: var(--line-fulfilled-bg); color: var(--line-fulfilled); }
+    .badge--partial { background: var(--line-partial-bg); color: var(--line-partial); }
+    .badge--unfulfilled { background: var(--line-unfulfilled-bg); color: var(--line-unfulfilled); }
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    @media (min-width: 880px) {
+      .layout { grid-template-columns: 1fr 320px; align-items: start; }
+    }
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .panel-head {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      font-weight: 600;
+    }
+    .panel-head svg { opacity: 0.55; }
+    .panel-body { padding: 0.5rem 0; }
+    .line-row {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+    }
+    .line-row:last-child { border-bottom: none; }
+    .thumb {
+      width: 72px;
+      height: 72px;
+      border-radius: 10px;
+      background: linear-gradient(145deg, #e7e5e4, #d6d3d1);
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .thumb--placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+    .line-main h3 {
+      margin: 0 0 0.25rem;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .line-sub { font-size: 0.85rem; color: var(--muted); }
+    .line-status { margin-top: 0.6rem; }
+    .line-prices { text-align: right; min-width: 7rem; }
+    .line-prices .qty { font-size: 0.8rem; color: var(--muted); }
+    .line-prices .each { font-size: 0.8rem; color: var(--muted); }
+    .line-prices .total {
+      font-family: Fraunces, Georgia, serif;
+      font-weight: 600;
+      font-size: 1.05rem;
+      margin-top: 0.25rem;
+    }
+    .summary { padding: 1.25rem; }
+    .summary dl {
+      margin: 0;
+      display: grid;
+      gap: 0.65rem;
+    }
+    .summary dt { color: var(--muted); font-size: 0.88rem; }
+    .summary dd { margin: 0; text-align: right; font-weight: 500; }
+    .summary .row { display: flex; justify-content: space-between; align-items: baseline; }
+    .summary .grand {
+      margin-top: 0.75rem;
+      padding-top: 0.85rem;
+      border-top: 1px solid var(--border);
+    }
+    .summary .grand dt { font-weight: 600; color: var(--text); }
+    .summary .grand dd {
+      font-family: Fraunces, Georgia, serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
+      padding: 0.65rem 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      font: inherit;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      color: var(--text);
+    }
+    .btn:hover { background: var(--bg); }
+    .ship-card {
+      margin: 0 1.25rem 1rem;
+      padding: 1rem 1.1rem;
+      background: #fafaf9;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    .ship-card:last-child { margin-bottom: 1rem; }
+    .ship-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.75rem; }
+    .ship-title { font-weight: 600; font-size: 0.95rem; }
+    .ship-headline { font-family: Fraunces, Georgia, serif; font-size: 1.1rem; font-weight: 600; margin: 0.5rem 0 0.15rem; }
+    .ship-detail { font-size: 0.85rem; color: var(--muted); margin: 0 0 0.75rem; }
+    .ship-pills { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.75rem; }
+    .ship-pill {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.55rem;
+      border-radius: 4px;
+      background: var(--line-unfulfilled-bg);
+      color: var(--line-unfulfilled);
+    }
+    .ship-pill--info { background: var(--ship-bg); color: var(--ship); }
+    .ship-pill--success { background: var(--line-fulfilled-bg); color: var(--line-fulfilled); }
+    .ship-pill--warn { background: var(--line-partial-bg); color: var(--line-partial); }
+    .ship-pill--crit { background: #fee2e2; color: #b91c1c; }
+    .ship-timeline {
+      list-style: none;
+      margin: 0.75rem 0 0;
+      padding: 0;
+      display: flex;
+      gap: 0;
+      border-top: 1px solid var(--border);
+      padding-top: 0.85rem;
+    }
+    .ship-timeline__step {
+      flex: 1;
+      text-align: center;
+      position: relative;
+      padding-top: 0.65rem;
+    }
+    .ship-timeline__step::before {
+      content: "";
+      position: absolute;
+      top: 0.35rem;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--border);
+      z-index: 0;
+    }
+    .ship-timeline__step:first-child::before { left: 50%; }
+    .ship-timeline__step:last-child::before { right: 50%; }
+    .ship-timeline__dot {
+      display: block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--border);
+      margin: 0 auto 0.35rem;
+      position: relative;
+      z-index: 1;
+    }
+    .ship-timeline__step.is-done .ship-timeline__dot,
+    .ship-timeline__step.is-current .ship-timeline__dot { background: var(--accent); }
+    .ship-timeline__step.is-current .ship-timeline__dot {
+      box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.2);
+    }
+    .ship-timeline__label {
+      display: block;
+      font-size: 0.62rem;
+      color: var(--muted);
+      line-height: 1.25;
+      padding: 0 0.15rem;
+    }
+    .ship-timeline__step.is-current .ship-timeline__label { color: var(--text); font-weight: 600; }
+    .track { font-size: 0.88rem; margin-top: 0.35rem; color: var(--muted); }
+    .track a { font-weight: 500; }
+    .err, .loading { padding: 2rem; text-align: center; color: var(--muted); }
+    .err { color: #b91c1c; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="crumbs">Home <span>/</span> Account <span>/</span> <span id="crumb-order">Order</span></div>
+    <div id="root">
+      <p class="loading">Loading order…</p>
+    </div>
+  </div>
+  <script>
+    const ORDER_PK = {{ order_pk }};
+
+    const money = (amount, currency) => {
+      try {
+        return new Intl.NumberFormat(undefined, {
+          style: "currency",
+          currency: currency || "USD",
+          minimumFractionDigits: 2,
+        }).format(Number(amount));
+      } catch {
+        return `${currency || ""} ${amount}`;
+      }
+    };
+
+    const finBadgeClass = (s) => (s === "paid" ? "badge--paid" : "badge--pending");
+    const orderFulfillmentBadgeClass = (s) => {
+      if (s === "fulfilled") return "badge--fulfilled";
+      if (s === "partial") return "badge--partial";
+      return "badge--unfulfilled";
+    };
+    const lineFulfillmentBadgeClass = orderFulfillmentBadgeClass;
+
+    const initials = (title) => {
+      const w = (title || "?").trim().split(/\s+/).slice(0, 2);
+      return w.map((x) => x[0]).join("").toUpperCase().slice(0, 3) || "?";
+    };
+
+    const packageStatusBadgeClass = (status) => {
+      if (status === "success") return "badge--fulfilled";
+      if (status === "in_transit" || status === "open") return "badge--partial";
+      if (status === "pending") return "badge--unfulfilled";
+      return "badge--pending";
+    };
+
+    function render(order) {
+      const displayName = order.name || `#${order.order_number}` || `Order ${order.id}`;
+      document.getElementById("crumb-order").textContent = displayName;
+      const finLabel = order.financial_status_label || order.financial_status;
+      const ordFulLabel = order.fulfillment_status_label || order.fulfillment_status;
+      const lines = order.line_items || [];
+      const fulfillments = order.fulfillments || [];
+
+      const lineHtml = lines
+        .map((li) => {
+          const vd = li.variant_detail || {};
+          const img = vd.image;
+          const thumb = img
+            ? `<img class="thumb" src="${img}" alt="" loading="lazy">`
+            : `<div class="thumb thumb--placeholder" aria-hidden="true">${initials(li.product_title)}</div>`;
+          const lineFs = li.fulfillment_status_label || li.fulfillment_status;
+          const lineBadgeClass = lineFulfillmentBadgeClass(li.fulfillment_status);
+          return `
+            <div class="line-row">
+              ${thumb}
+              <div class="line-main">
+                <h3>${escapeHtml(li.product_title)}</h3>
+                <div class="line-sub">${escapeHtml(li.variant_title || "")}${li.sku ? ` · SKU ${escapeHtml(li.sku)}` : ""}</div>
+                <div class="line-status"><span class="badge ${lineBadgeClass}">${escapeHtml(lineFs)}</span></div>
+              </div>
+              <div class="line-prices">
+                <div class="qty">Qty ${li.quantity}</div>
+                <div class="each">${money(li.unit_price, order.currency)} each</div>
+                <div class="total">${money(li.line_total, order.currency)}</div>
+              </div>
+            </div>`;
+        })
+        .join("");
+
+      const fulfillmentHtml = fulfillments.length
+        ? fulfillments
+            .map((f, i) => {
+              const carrier = f.tracking_company || "";
+              const svc = (f.fulfillment_service_detail && f.fulfillment_service_detail.courier_name) || "";
+              const label = carrier || svc || "Manual";
+              const tn = f.tracking_number || "";
+              const url = f.tracking_url || "";
+              const statusLabel = f.status_label || f.status;
+              const lineCount = (f.line_items || []).length;
+              const itemsSummary = lineCount
+                ? `${lineCount} line item${lineCount === 1 ? "" : "s"}`
+                : "All remaining items";
+              return `
+        <div class="ship-card">
+          <div class="ship-top">
+            <div class="ship-title">#${i + 1} · ${escapeHtml(label)}</div>
+            <span class="badge ${packageStatusBadgeClass(f.status)}">${escapeHtml(statusLabel)}</span>
+          </div>
+          <p class="ship-detail">${escapeHtml(itemsSummary)}${f.shipped_at ? ` · Shipped ${escapeHtml(new Date(f.shipped_at).toLocaleDateString())}` : ""}</p>
+          <div class="track">${tn ? escapeHtml(tn) : "No tracking number"}</div>
+          ${url ? `<div class="track"><a href="${escapeAttr(url)}" target="_blank" rel="noopener">Track shipment ↗</a></div>` : ""}
+        </div>`;
+            })
+            .join("")
+        : `<p class="loading" style="padding:1rem 1.25rem;margin:0;">Unfulfilled — no packages yet.</p>`;
+
+      document.getElementById("root").innerHTML = `
+        <header class="page-head">
+          <div>
+            <div class="kicker">Order detail</div>
+            <h1>${escapeHtml(displayName)}</h1>
+            <p class="meta">Placed ${escapeHtml(new Date(order.created_at).toLocaleString())}</p>
+            <p class="meta">${escapeHtml([order.email, order.phone].filter(Boolean).join(" · "))}</p>
+          </div>
+          <div class="badges">
+            <span class="badge ${finBadgeClass(order.financial_status)}">${escapeHtml(finLabel)}</span>
+            <span class="badge ${orderFulfillmentBadgeClass(order.fulfillment_status)}">${escapeHtml(ordFulLabel)}</span>
+          </div>
+        </header>
+        <div class="layout">
+          <div>
+            <section class="panel" style="margin-bottom:1.5rem;">
+              <div class="panel-head">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                Items (${lines.length})
+              </div>
+              <div class="panel-body">${lineHtml}</div>
+            </section>
+            <section class="panel">
+              <div class="panel-head">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                Fulfillment
+              </div>
+              <div class="panel-body" style="padding-top:0.5rem;">${fulfillmentHtml}</div>
+            </section>
+          </div>
+          <aside class="panel summary">
+            <dl>
+              <div class="row"><dt>Subtotal</dt><dd>${money(order.subtotal, order.currency)}</dd></div>
+              <div class="row"><dt>Shipping</dt><dd>${money(order.shipping_total, order.currency)}</dd></div>
+              <div class="row"><dt>Tax</dt><dd>${money(order.tax_total, order.currency)}</dd></div>
+            </dl>
+            <dl class="grand row"><dt>Total</dt><dd>${money(order.total, order.currency)}</dd></dl>
+            <a class="btn" href="javascript:history.back()">← Back</a>
+          </aside>
+        </div>`;
+    }
+
+    function escapeHtml(s) {
+      return String(s)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+    function escapeAttr(s) {
+      return escapeHtml(s).replace(/'/g, "&#39;");
+    }
+
+    (async () => {
+      try {
+        const res = await fetch(`/api/v1/orders/${ORDER_PK}/`);
+        if (!res.ok) throw new Error(res.status === 404 ? "Order not found." : "Could not load order.");
+        render(await res.json());
+      } catch (e) {
+        document.getElementById("root").innerHTML = `<p class="err">${escapeHtml(e.message)}</p>`;
+      }
+    })();
+  </script>
+</body>
+</html>
